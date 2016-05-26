@@ -264,6 +264,7 @@ public final class R {
         public static final int RelativeLayout1=0x7f09000e;
         public static final int RelativeLayout2=0x7f090013;
         public static final int add=0x7f090010;
+        public static final int address=0x7f09003e;
         public static final int auto_save_password=0x7f090028;
         public static final int back=0x7f09000f;
         public static final int bodylayout=0x7f090012;
@@ -272,8 +273,8 @@ public final class R {
         public static final int chat_name=0x7f090003;
         public static final int chat_send=0x7f090006;
         public static final int content_001=0x7f09002a;
-        public static final int friend_menu_add=0x7f090041;
-        public static final int friend_menu_exit=0x7f090042;
+        public static final int friend_menu_add=0x7f090045;
+        public static final int friend_menu_exit=0x7f090046;
         public static final int head_arrowImageView=0x7f09001b;
         public static final int head_contentLayout=0x7f09001a;
         public static final int head_lastUpdatedTextView=0x7f09001e;
@@ -282,15 +283,17 @@ public final class R {
         public static final int id_item=0x7f090021;
         public static final int image=0x7f090023;
         public static final int imageView_item=0x7f09001f;
+        public static final int imgicon=0x7f09003c;
         public static final int input=0x7f090024;
         public static final int iv_userhead=0x7f090009;
         public static final int lgoin_accounts=0x7f090025;
         public static final int listview=0x7f090004;
         public static final int login_btn=0x7f090027;
-        public static final int login_menu_exit=0x7f090044;
-        public static final int login_menu_setting=0x7f090043;
+        public static final int login_menu_exit=0x7f090048;
+        public static final int login_menu_setting=0x7f090047;
         public static final int login_password=0x7f090026;
         public static final int loginpage=0x7f090022;
+        public static final int name=0x7f09003d;
         public static final int name_item=0x7f090020;
         public static final int notify_imageLog=0x7f09002c;
         public static final int notify_msg=0x7f09002e;
@@ -311,14 +314,15 @@ public final class R {
         public static final int rl_bottom=0x7f090005;
         public static final int rl_layout=0x7f090001;
         public static final int root=0x7f09000d;
-        public static final int setting_ip=0x7f09003c;
-        public static final int setting_port=0x7f09003d;
+        public static final int says=0x7f09003f;
+        public static final int setting_ip=0x7f090040;
+        public static final int setting_port=0x7f090041;
         public static final int tab1=0x7f090016;
-        public static final int tab1_listView=0x7f09003e;
+        public static final int tab1_listView=0x7f090042;
         public static final int tab2=0x7f090017;
-        public static final int tab2_listView=0x7f09003f;
+        public static final int tab2_listView=0x7f090043;
         public static final int tab3=0x7f090018;
-        public static final int tab3_listView=0x7f090040;
+        public static final int tab3_listView=0x7f090044;
         public static final int tab4=0x7f090019;
         public static final int tab_bg=0x7f090015;
         public static final int textView2=0x7f090036;
@@ -344,11 +348,12 @@ public final class R {
         public static final int notify_view=0x7f03000a;
         public static final int recent_chat_item=0x7f03000b;
         public static final int register=0x7f03000c;
-        public static final int setting_view=0x7f03000d;
-        public static final int tab1=0x7f03000e;
-        public static final int tab2=0x7f03000f;
-        public static final int tab3=0x7f030010;
-        public static final int tab4=0x7f030011;
+        public static final int seek_info_item=0x7f03000d;
+        public static final int setting_view=0x7f03000e;
+        public static final int tab1=0x7f03000f;
+        public static final int tab2=0x7f030010;
+        public static final int tab3=0x7f030011;
+        public static final int tab4=0x7f030012;
     }
     public static final class menu {
         public static final int friend_list=0x7f080000;

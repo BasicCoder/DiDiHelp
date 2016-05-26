@@ -170,6 +170,7 @@ public class LoginActivity extends MyActivity implements OnClickListener {
 		if (msg != null) {
 			switch (msg.getType()) {
 			case LOGIN:// LoginActivity只处理登录的消息
+				Log.e("LoginActivity", "GetLoginMessage");
 				List<User> list = (List<User>) msg.getObject();
 				if (list.size() > 0) {
 					// 保存用户信息
@@ -184,8 +185,8 @@ public class LoginActivity extends MyActivity implements OnClickListener {
 					UserDB db = new UserDB(LoginActivity.this);
 					db.addUser(list);
 					
-					Intent i = new Intent(LoginActivity.this,
-							FriendListActivity.class);
+					Intent i = new Intent(LoginActivity.this, FriendListActivity.class);
+					
 					i.putExtra(Constants.MSGKEY, msg);
 					startActivity(i);
 

@@ -1,6 +1,7 @@
 package com.way.chat.activity;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import android.app.AlertDialog;
@@ -69,6 +70,8 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 	private UserDB userDB;// 保存好友列表数据库对象
 	private MessageDB messageDB;// 消息数据库对象
 
+	private ListView mSeekInfoListView; //求伞listView
+	
 	private MyListView myListView;// 好友列表自定义listView
 	private MyExAdapter myExAdapter;// 好
 
@@ -250,12 +253,19 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		titleTab.add("最近联系");
 		titleTab.add("个人信息");
 		
+		// 求伞信息列表
+		mSeekInfoListView =(ListView) lay1.findViewById(R.id.tab1_listView);
+		List<SeekInfoEntity> seekInfoList = new LinkedList<SeekInfoEntity>();
+		seekInfoList.add(new SeekInfoEntity(R.drawable.umbrella1, "test1", "test1", "This is a test."));
+		seekInfoList.add(new SeekInfoEntity(R.drawable.umbrella1, "test2", "test2", "This is a test."));
+		SeekInfoAdapter seekInfoAdapter = new SeekInfoAdapter(this, (LinkedList<SeekInfoEntity>)seekInfoList);
+		mSeekInfoListView.setAdapter(seekInfoAdapter);
 		
 		// 下面是最近会话界面处理
 		mRecentListView = (ListView) lay1.findViewById(R.id.tab1_listView);
 		// mRecentAdapter = new RecentChatAdapter(FriendListActivity.this,
 		// application.getmRecentList());// 从全局变量中获取最近聊天对象数组
-		mRecentListView.setAdapter(application.getmRecentAdapter());// 先设置空对象，要么从数据库中读出
+		// mRecentListView.setAdapter(application.getmRecentAdapter());// 先设置空对象，要么从数据库中读出
 
 		// 下面是处理好友列表界面处理
 		myListView = (MyListView) lay2.findViewById(R.id.tab2_listView);
@@ -286,13 +296,13 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 			mPager.setCurrentItem(PAGE1);// 点击页面1
 			break;
 		case R.id.tab2:
-			mPager.setCurrentItem(PAGE2);// 点击页面1
+			mPager.setCurrentItem(PAGE2);// 点击页面2
 			break;
 		case R.id.tab3:
-			mPager.setCurrentItem(PAGE3);// 点击页面1
+			mPager.setCurrentItem(PAGE3);// 点击页面3
 			break;
 		case R.id.tab4:
-			mPager.setCurrentItem(PAGE4);// 点击页面1
+			mPager.setCurrentItem(PAGE4);// 点击页面4
 			break;
 		default:
 			break;
@@ -410,8 +420,8 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 			// TODO Auto-generated method stub
 			Animation animation = null;
 			animation = new TranslateAnimation(currentIndex*one, arg0*one, 0, 0);
-			imageTab.get(currentIndex).setImageDrawable(drawableTab.get(currentIndex*2));
-			imageTab.get(arg0).setImageDrawable(drawableTab.get(arg0*2+1));
+			imageTab.get(currentIndex).setImageDrawable(drawableTab.get(currentIndex*2)); // 恢复ImageView 未选中状态图标
+			imageTab.get(arg0).setImageDrawable(drawableTab.get(arg0*2+1)); // 设置当前ImageView选中图标
 			title.setText(titleTab.get(arg0));
 			currentIndex = arg0;// 动画结束后，改变当前图片位置
 			animation.setFillAfter(true);// True:图片停在动画结束位置

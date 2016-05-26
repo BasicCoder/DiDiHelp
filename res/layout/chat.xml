@@ -4,7 +4,11 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
+
+
+
+
+
     <RelativeLayout
         android:id="@+id/rl_layout"
         android:layout_width="fill_parent"
@@ -34,7 +38,14 @@
             android:textColor="#ffffff"
             android:textSize="20.0sp" />
     </RelativeLayout>
-
+
+
+
+
+
+
+
+
     <ListView
         android:id="@+id/listview"
         android:layout_width="fill_parent"
@@ -49,7 +60,12 @@
         android:scrollbars="none" >
 
     </ListView>
-
+
+
+
+
+
+
     <RelativeLayout
         android:id="@+id/rl_bottom"
         android:layout_width="fill_parent"
