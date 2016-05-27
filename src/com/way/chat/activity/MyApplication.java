@@ -18,17 +18,24 @@ public class MyApplication extends Application {
 	private LinkedList<RecentChatEntity> mRecentList;
 	private RecentChatAdapter mRecentAdapter;
 	private int recentNum = 0;
-
+	
+	private LinkedList<SeekInfoEntity> mSeekInfoList;
+	private SeekInfoAdapter mSeekInfoAdapter;
+	
+	
 	@Override
 	public void onCreate() {
-		SharePreferenceUtil util = new SharePreferenceUtil(this,
-				Constants.SAVE_USER);
+		SharePreferenceUtil util = new SharePreferenceUtil(this, Constants.SAVE_USER);
 		System.out.println(util.getIp() + " " + util.getPort());
 		Log.e("MyApplication", util.getIp() + " " + util.getPort());
 		client = new Client(util.getIp(), util.getPort());// 从配置文件中读ip和地址
+		
 		mRecentList = new LinkedList<RecentChatEntity>();
-		mRecentAdapter = new RecentChatAdapter(getApplicationContext(),
-				mRecentList);
+		mRecentAdapter = new RecentChatAdapter(getApplicationContext(), mRecentList);
+		
+		mSeekInfoList = new LinkedList<SeekInfoEntity>();
+		mSeekInfoAdapter = new SeekInfoAdapter(getApplicationContext(), mSeekInfoList); 
+		
 		super.onCreate();
 	}
 
@@ -82,5 +89,21 @@ public class MyApplication extends Application {
 
 	public void setRecentNum(int recentNum) {
 		this.recentNum = recentNum;
+	}
+	
+	public LinkedList<SeekInfoEntity> getSeekInfoList(){
+		return mSeekInfoList;
+	}
+	
+	public void setSeekInfoList(LinkedList<SeekInfoEntity> mSeekInfoEntity){
+		this.mSeekInfoList = mSeekInfoEntity;
+	}
+	
+	public SeekInfoAdapter getSeekInfoAdapter(){
+		return mSeekInfoAdapter;
+	}
+	
+	public void setSeekInfoAdapter(SeekInfoAdapter mSeekInfoAdapter){
+		this.mSeekInfoAdapter = mSeekInfoAdapter;
 	}
 }
