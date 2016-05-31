@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,12 +29,15 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.way.chat.common.bean.SeekInfoMessage;
 import com.way.chat.common.bean.TextMessage;
 import com.way.chat.common.bean.User;
 import com.way.chat.common.tran.bean.TranObject;
@@ -72,14 +76,24 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 
 	private ListView mSeekInfoListView; //求伞listView
 	
+	private ImageView mImgSend; //发布信息配图
+	private TextView mAddressSend; //发布地址
+	private EditText mSaysSend; //发布需求
+	private Button mClear; //清空
+	private Button mSend; //发送
+	
 	private MyListView myListView;// 好友列表自定义listView
 	private MyExAdapter myExAdapter;// 好
 
+	private ImageView mImgPersonal; //个人头像
+	private EditText mSaysPersonal; //个人留言
+	
 	private ListView mRecentListView;// 最近会话的listView
 	private int newNum = 0;
 
 	private ListView mGroupListView;// 群组listView
-
+	
+	
 	private ViewPager mPager;
 	private List<View> mListViews;// Tab页面
 	private LinearLayout layout_body_activity;
@@ -255,18 +269,27 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		
 		// 求伞信息列表
 		mSeekInfoListView =(ListView) lay1.findViewById(R.id.tab1_listView);
-		List<SeekInfoEntity> seekInfoList = new LinkedList<SeekInfoEntity>();
+		List<SeekInfoEntity> seekInfoList = application.getSeekInfoList();
 		seekInfoList.add(new SeekInfoEntity(R.drawable.umbrella1, "test1", "test1", "This is a test."));
 		seekInfoList.add(new SeekInfoEntity(R.drawable.umbrella1, "test2", "test2", "This is a test."));
-		SeekInfoAdapter seekInfoAdapter = new SeekInfoAdapter(this, (LinkedList<SeekInfoEntity>)seekInfoList);
-		mSeekInfoListView.setAdapter(seekInfoAdapter);
+		//SeekInfoAdapter seekInfoAdapter = new SeekInfoAdapter(this, (LinkedList<SeekInfoEntity>)seekInfoList);
+		mSeekInfoListView.setAdapter(application.getSeekInfoAdapter());
 		
 		// 下面是最近会话界面处理
 		mRecentListView = (ListView) lay1.findViewById(R.id.tab1_listView);
 		// mRecentAdapter = new RecentChatAdapter(FriendListActivity.this,
 		// application.getmRecentList());// 从全局变量中获取最近聊天对象数组
 		// mRecentListView.setAdapter(application.getmRecentAdapter());// 先设置空对象，要么从数据库中读出
-
+		
+		// 下面是发布求伞信息处理
+		mImgSend = (ImageView) lay2.findViewById(R.id.img_send);
+		mAddressSend = (TextView) lay2.findViewById(R.id.address_send);
+		mSaysSend = (EditText) lay2.findViewById(R.id.says_send);
+		mClear = (Button) lay2.findViewById(R.id.clear_btn);
+		mSend = (Button) lay2.findViewById(R.id.publish_btn);
+		mClear.setOnClickListener(new Tab2ClickEvent());
+		mSend.setOnClickListener(new Tab2ClickEvent());
+		
 		// 下面是处理好友列表界面处理
 		myListView = (MyListView) lay3.findViewById(R.id.tab3_listView);
 		myExAdapter = new MyExAdapter(this, group);
@@ -275,7 +298,11 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		myListView.setDivider(null);// 设置图片可拉伸的
 		myListView.setFocusable(true);// 聚焦才可以下拉刷新
 		myListView.setonRefreshListener(new MyRefreshListener());
-
+		
+		// 下面是个人信息界面处理
+		mImgPersonal = (ImageView) lay4.findViewById(R.id.img_personal);
+		mSaysPersonal = (EditText) lay4.findViewById(R.id.says_personal);
+		
 		// 下面是群组界面处理
 		/*
 		mGroupListView = (ListView) lay3.findViewById(R.id.tab3_listView);
@@ -309,6 +336,32 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 			break;
 		default:
 			break;
+		}
+	}
+
+	class Tab2ClickEvent implements View.OnClickListener{
+		@Override
+		public void onClick(View v){
+			switch(v.getId()){
+				case R.id.clear_btn:
+					mSaysSend.setText("");
+				break;
+				case R.id.publish_btn:
+					if(application.isClientStart()) {
+						ClientOutputThread out = application.getClient()
+								.getClientOutputThread();
+						TranObject<SeekInfoMessage> o = new TranObject<SeekInfoMessage>(TranObjectType.REFRESH);
+						SeekInfoMessage publishSeekInfo = new SeekInfoMessage();
+						//publishSeekInfo.setImg(img);
+						//publishSeekInfo.setName();
+						
+						o.setObject(publishSeekInfo);
+						o.setFromUser(Integer.parseInt(util.getId()));
+						out.setMsg(o);
+						mSaysSend.setText("");
+					}
+				break;
+			}
 		}
 	}
 
@@ -383,6 +436,16 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 			application.getmRecentAdapter().remove(entity2);// 先移除该对象，目的是添加到首部
 			application.getmRecentList().addFirst(entity2);// 再添加到首部
 			application.getmRecentAdapter().notifyDataSetChanged();
+			break;
+		case SEEKINFO:
+			Log.e("SeekInfo", "ReceiveSeekList");
+			List<SeekInfoEntity> seekInfoList1 = application.getSeekInfoList();
+			List<SeekInfoEntity> list = (List<SeekInfoEntity>) msg.getObject();
+			if(!seekInfoList1.isEmpty()){
+				seekInfoList1.clear();	
+			}
+			seekInfoList1.addAll(list);
+			application.getSeekInfoAdapter().notifyDataSetChanged();
 			break;
 		case LOGIN:
 			User loginUser = (User) msg.getObject();

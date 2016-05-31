@@ -1,6 +1,7 @@
 package com.way.chat.activity;
 
 public class SeekInfoEntity {
+	private int id;
 	private int img;
 	private String name;
 	private String address;
@@ -14,6 +15,14 @@ public class SeekInfoEntity {
 		this.name = name;
 		this.address = address;
 		this.says = says;
+	}
+	
+	public int getId(){
+		return id;
+	}
+	
+	public void setId(int id){
+		this.id = id;
 	}
 	
 	public int getImg(){

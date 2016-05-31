@@ -16,4 +16,5 @@ public enum TranObjectType {
 	UNCONNECTED, // 无法连接
 	FILE, // 传输文件
 	REFRESH, // 刷新
+	SEEKINFO, // 寻求信息
 }

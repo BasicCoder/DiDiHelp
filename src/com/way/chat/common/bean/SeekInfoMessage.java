@@ -11,6 +11,7 @@ public class SeekInfoMessage implements Serializable {
 	private String ip;
 	private int port;
 	private int group;
+	private String Address;
 
 	private int getId(){
 		return id;
@@ -72,7 +73,7 @@ public class SeekInfoMessage implements Serializable {
 	public boolean equals(Object o){
 		if(o instanceof SeekInfoMessage){
 			SeekInfoMessage SeekInfo = (SeekInfoMessage) o;
-			if(SeekInfo.getId() == id && user.getIp().equals(ip) && user.getPort() == port){
+			if(SeekInfo.getId() == id && SeekInfo.getIp().equals(ip) && SeekInfo.getPort() == port){
 				return true;
 			}
 		}
@@ -81,7 +82,7 @@ public class SeekInfoMessage implements Serializable {
 	}
 
 	@Override
-	public String toSting(){
+	public String toString(){
 		return "SeekInfoMessage [id=" + id + ", name=" + name + ", isOnline=" + isOnline
 				+ ", img=" + img + ", ip=" + ip + ", port=" + port + ", group="
 				+ group + "]";

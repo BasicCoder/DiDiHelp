@@ -276,8 +276,8 @@ public final class R {
         public static final int chat_send=0x7f090006;
         public static final int clear_btn=0x7f090046;
         public static final int content_001=0x7f09002a;
-        public static final int friend_menu_add=0x7f090049;
-        public static final int friend_menu_exit=0x7f09004a;
+        public static final int friend_menu_add=0x7f09004b;
+        public static final int friend_menu_exit=0x7f09004c;
         public static final int head_arrowImageView=0x7f09001b;
         public static final int head_contentLayout=0x7f09001a;
         public static final int head_lastUpdatedTextView=0x7f09001e;
@@ -286,6 +286,7 @@ public final class R {
         public static final int id_item=0x7f090021;
         public static final int image=0x7f090023;
         public static final int imageView_item=0x7f09001f;
+        public static final int img_personal=0x7f090049;
         public static final int img_send=0x7f090043;
         public static final int imgicon=0x7f09003c;
         public static final int input=0x7f090024;
@@ -293,8 +294,8 @@ public final class R {
         public static final int lgoin_accounts=0x7f090025;
         public static final int listview=0x7f090004;
         public static final int login_btn=0x7f090027;
-        public static final int login_menu_exit=0x7f09004c;
-        public static final int login_menu_setting=0x7f09004b;
+        public static final int login_menu_exit=0x7f09004e;
+        public static final int login_menu_setting=0x7f09004d;
         public static final int login_password=0x7f090026;
         public static final int loginpage=0x7f090022;
         public static final int name=0x7f09003d;
@@ -320,6 +321,7 @@ public final class R {
         public static final int rl_layout=0x7f090001;
         public static final int root=0x7f09000d;
         public static final int says=0x7f09003f;
+        public static final int says_personal=0x7f09004a;
         public static final int says_send=0x7f090045;
         public static final int setting_ip=0x7f090040;
         public static final int setting_port=0x7f090041;
