@@ -1,6 +1,10 @@
 package com.way.chat.activity;
 
-public class SeekInfoEntity {
+import java.io.Serializable;
+
+public class SeekInfoEntity implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private int img;
 	private String name;

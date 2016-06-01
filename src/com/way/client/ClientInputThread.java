@@ -48,13 +48,21 @@ public class ClientInputThread extends Thread {
 	public void run() {
 		try {
 			while (isStart) {
+				Log.e("ClientInputThread", "ReadMsg");
 				msg = (TranObject) ois.readObject();
+				Log.e("ClientInputThread", "GetMsg: "+ msg);
+				
+				if(msg == null)
+					Log.e("ClientInputThread", "msg == null");
+				if(messageListener == null)
+					Log.e("ClientInputThread", "messageListener == null");
 				if(msg == null || messageListener == null){
-					Log.v("debug", "caonimahehe");
+					Log.e("debug", "caonimahehe");
 					continue;
 				}
 				// 每收到一条消息，就调用接口的方法，并传入该消息对象，外部在实现接口的方法时，就可以及时处理传入的消息对象了
 				// 我不知道我有说明白没有？
+				Log.e("ClientInputThread", "BroadcastSend");
 				messageListener.Message(msg);
 			}
 			ois.close();

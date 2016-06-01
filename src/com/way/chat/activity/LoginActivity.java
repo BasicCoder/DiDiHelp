@@ -57,7 +57,23 @@ public class LoginActivity extends MyActivity implements OnClickListener {
 		initView();
 		mi = new MenuInflater(this);
 	}
-
+	@Override
+	public void onStart(){
+		super.onStart();
+		/*if (isNetworkAvailable()) {
+			try{
+				Intent service = new Intent(this, GetMsgService.class);
+				startService(service);
+				Log.e("LoginActivity", "Start Service.");
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		} else {
+			toast(this);
+		}*/
+	}
+	
 	@Override
 	protected void onResume() {// 在onResume方法里面先判断网络是否可用，再启动服务,这样在打开网络连接之后返回当前Activity时，会重新启动服务联网，
 		super.onResume();
@@ -65,6 +81,7 @@ public class LoginActivity extends MyActivity implements OnClickListener {
 			try{
 				Intent service = new Intent(this, GetMsgService.class);
 				startService(service);
+				Log.e("LoginActivity", "Start Service.");
 			}
 			catch(Exception e){
 				e.printStackTrace();
@@ -170,7 +187,6 @@ public class LoginActivity extends MyActivity implements OnClickListener {
 		if (msg != null) {
 			switch (msg.getType()) {
 			case LOGIN:// LoginActivity只处理登录的消息
-				Log.e("LoginActivity", "GetLoginMessage");
 				List<User> list = (List<User>) msg.getObject();
 				if (list.size() > 0) {
 					// 保存用户信息
@@ -185,8 +201,8 @@ public class LoginActivity extends MyActivity implements OnClickListener {
 					UserDB db = new UserDB(LoginActivity.this);
 					db.addUser(list);
 					
-					Intent i = new Intent(LoginActivity.this, FriendListActivity.class);
-					
+					Intent i = new Intent(LoginActivity.this,
+							FriendListActivity.class);
 					i.putExtra(Constants.MSGKEY, msg);
 					startActivity(i);
 
@@ -256,8 +272,7 @@ public class LoginActivity extends MyActivity implements OnClickListener {
 					public void onClick(DialogInterface dialog, int which) {
 						if (application.isClientStart()) {// 如果连接还在，说明服务还在运行
 							// 关闭服务
-							Intent service = new Intent(LoginActivity.this,
-									GetMsgService.class);
+							Intent service = new Intent(LoginActivity.this, GetMsgService.class);
 							stopService(service);
 						}
 						close();// 调用父类自定义的循环关闭方法

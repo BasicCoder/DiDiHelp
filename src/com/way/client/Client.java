@@ -78,7 +78,7 @@ public class Client {
 	// 直接通过client得到读线程
 	public ClientInputThread getClientInputThread() {
 		if(clientThread == null)
-			Log.v("debug","hexxx");
+			Log.e("debug","hexxx");
 		return clientThread.getIn();
 	}
 

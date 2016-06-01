@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -133,18 +134,16 @@ public class GetMsgService extends Service {
 		isStart = client.start();
 		
 		application.setClientStart(isStart);
-		System.out.println("client start:" + isStart);
+		Log.e("GetMsgService:", "" + isStart);
 		if (isStart) {
 			while(!client.temp){
 				
 			}
-			ClientInputThread in = client.getClientInputThread();
-			
-			in.setMessageListener(new MessageListener() {
-
+			Log.e("GetMsgService:", "Endloop");
+			MessageListener messageListener = new MessageListener(){
 				@Override
 				public void Message(TranObject msg) {
-					// System.out.println("GetMsgService:" + msg);
+					Log.e("GetMsgService:", ""+msg.getType());
 					if (util.getIsStart()) {// 如果 是在后台运行，就更新通知栏，否则就发送广播给Activity
 						if (msg.getType() == TranObjectType.MESSAGE) {// 只处理文本消息类型
 							// System.out.println("收到新消息");
@@ -161,7 +160,12 @@ public class GetMsgService extends Service {
 						sendBroadcast(broadCast);// 把收到的消息已广播的形式发送出去
 					}
 				}
-			});
+			};
+			ClientInputThread in = client.getClientInputThread();
+			
+			in.setMessageListener(messageListener);
+			
+			Log.e("GetMsgService:", "setMessageListenerOver");
 		}
 	}
 

@@ -22,8 +22,7 @@ public abstract class MyActivity extends Activity {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			TranObject msg = (TranObject) intent
-					.getSerializableExtra(Constants.MSGKEY);
+			TranObject msg = (TranObject) intent.getSerializableExtra(Constants.MSGKEY);
 			if (msg != null) {//如果不是空，说明是消息广播
 				// System.out.println("MyActivity:" + msg);
 				getMessage(msg);// 把收到的消息传递给子类
