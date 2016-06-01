@@ -169,8 +169,17 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 			userDB.updateUser(list);
 		}
 		initListViewData(list);
+		
+		SendGetSeekInfoList();
 	}
-
+	
+	private void SendGetSeekInfoList(){
+		ClientOutputThread out = application.getClient().getClientOutputThread();
+		TranObject o = new TranObject(TranObjectType.SEEKINFO);
+		o.setFromUser(Integer.parseInt(util.getId()));
+		out.setMsg(o);
+	}
+	
 	/**
 	 * 处理服务器传递过来的用户数组数据，
 	 * 

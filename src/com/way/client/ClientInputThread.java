@@ -38,6 +38,8 @@ public class ClientInputThread extends Thread {
 	 */
 	public void setMessageListener(MessageListener messageListener) {
 		this.messageListener = messageListener;
+		if(this.messageListener != null)
+			Log.e("ClientInputThread", "setMsgListener");
 	}
 
 	public void setStart(boolean isStart) {
