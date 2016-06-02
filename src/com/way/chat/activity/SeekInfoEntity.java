@@ -60,4 +60,24 @@ public class SeekInfoEntity implements Serializable{
 	public void setSays(String says){
 		this.says = says;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof SeekInfoEntity) {
+			SeekInfoEntity seekinfo = (SeekInfoEntity) o;
+			if (seekinfo.getId() == id && seekinfo.getName().equals(name)
+					&& seekinfo.getSays().equals(says)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return "SeekInfoEntity [id=" + id + ", name=" + name 
+				+ ", img=" + img + ", address=" + address + ", says=" + says
+				+ "]";
+	}
 }

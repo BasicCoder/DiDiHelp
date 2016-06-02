@@ -37,7 +37,12 @@ public class ClientInputThread extends Thread {
 	 *            消息监听接口对象
 	 */
 	public void setMessageListener(MessageListener messageListener) {
-		this.messageListener = messageListener;
+		if(messageListener != null){
+			this.messageListener = messageListener;
+		}else{
+			Log.e("ClientInputThread", "Someone may want to explode this");
+		}
+		
 		if(this.messageListener != null)
 			Log.e("ClientInputThread", "setMsgListener");
 	}
