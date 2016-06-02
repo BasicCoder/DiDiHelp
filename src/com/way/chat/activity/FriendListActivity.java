@@ -1,5 +1,9 @@
 package com.way.chat.activity;
 
+import java.io.File;
+import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,8 +17,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
@@ -37,6 +44,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.way.chat.common.bean.SeekInfoEntity;
 import com.way.chat.common.bean.SeekInfoMessage;
 import com.way.chat.common.bean.TextMessage;
 import com.way.chat.common.bean.User;
@@ -81,6 +89,9 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 	private EditText mSaysSend; //发布需求
 	private Button mClear; //清空
 	private Button mSend; //发送
+	private Uri imageUri;
+	private String fileName;
+	
 	
 	private MyListView myListView;// 好友列表自定义listView
 	private MyExAdapter myExAdapter;// 好
@@ -298,6 +309,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		mSend = (Button) lay2.findViewById(R.id.publish_btn);
 		mClear.setOnClickListener(new Tab2ClickEvent());
 		mSend.setOnClickListener(new Tab2ClickEvent());
+		mImgSend.setOnClickListener(new Tab2ClickEvent());
 		
 		// 下面是处理好友列表界面处理
 		myListView = (MyListView) lay3.findViewById(R.id.tab3_listView);
@@ -354,22 +366,47 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 			switch(v.getId()){
 				case R.id.clear_btn:
 					mSaysSend.setText("");
-				break;
+					break;
 				case R.id.publish_btn:
 					if(application.isClientStart()) {
-						ClientOutputThread out = application.getClient()
-								.getClientOutputThread();
-						TranObject<SeekInfoMessage> o = new TranObject<SeekInfoMessage>(TranObjectType.REFRESH);
-						SeekInfoMessage publishSeekInfo = new SeekInfoMessage();
+						ClientOutputThread out = application.getClient().getClientOutputThread();
+						TranObject o = new TranObject(TranObjectType.REFRESH);
+						SeekInfoEntity publishSeekInfo = new SeekInfoEntity();
 						//publishSeekInfo.setImg(img);
-						//publishSeekInfo.setName();
+						publishSeekInfo.setId(Integer.parseInt(util.getId()));
+						publishSeekInfo.setName(util.getName());
+						String str = "";
+						str = mSaysSend.getText().toString();
+						if(str.length() >= 1){
+							publishSeekInfo.setSays(str);
+						}
 						
 						o.setObject(publishSeekInfo);
 						o.setFromUser(Integer.parseInt(util.getId()));
 						out.setMsg(o);
 						mSaysSend.setText("");
 					}
-				break;
+					break;
+				case R.id.img_send:
+					SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+		            Date date = new Date(System.currentTimeMillis());
+		            fileName = format.format(date);
+		            File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+		            File outputImage = new File(path, fileName+".jpg");
+		            try {
+		                if(outputImage.exists()) {
+		                    outputImage.delete();
+		                }
+		                outputImage.createNewFile();
+		            } catch(IOException e) {
+		                e.printStackTrace();
+		            }
+		            imageUri = Uri.fromFile(outputImage);
+		            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE"); //照相
+		            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri); //指定图片输出地址
+		            startActivityForResult(intent,0); //启动照相
+		            
+					break;
 			}
 		}
 	}

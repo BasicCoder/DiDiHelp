@@ -2,6 +2,7 @@ package com.way.chat.activity;
 
 import java.util.LinkedList;
 
+import com.way.chat.common.bean.SeekInfoEntity;
 import com.way.chat.common.util.Constants;
 import com.way.client.Client;
 import com.way.util.SharePreferenceUtil;

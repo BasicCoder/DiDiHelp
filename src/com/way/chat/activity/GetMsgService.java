@@ -154,10 +154,12 @@ public class GetMsgService extends Service {
 							handler.sendMessage(message);
 						}
 					} else {
+						Log.e("GetMsgService:", "UnionSend");
 						Intent broadCast = new Intent();
 						broadCast.setAction(Constants.ACTION);
 						broadCast.putExtra(Constants.MSGKEY, msg);
 						sendBroadcast(broadCast);// 把收到的消息已广播的形式发送出去
+						
 					}
 				}
 			};

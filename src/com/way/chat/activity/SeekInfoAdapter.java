@@ -2,6 +2,8 @@ package com.way.chat.activity;
 
 import java.util.LinkedList;
 
+import com.way.chat.common.bean.SeekInfoEntity;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
