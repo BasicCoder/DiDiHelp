@@ -36,6 +36,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -294,7 +295,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		seekInfoList.add(new SeekInfoEntity(R.drawable.umbrella1, "test2", "test2", "This is a test."));
 		//SeekInfoAdapter seekInfoAdapter = new SeekInfoAdapter(this, (LinkedList<SeekInfoEntity>)seekInfoList);
 		mSeekInfoListView.setAdapter(application.getSeekInfoAdapter());
-		
+		mSeekInfoListView.setOnItemClickListener(new Tab1ListViewItemClick());
 		// 下面是最近会话界面处理
 		mRecentListView = (ListView) lay1.findViewById(R.id.tab1_listView);
 		// mRecentAdapter = new RecentChatAdapter(FriendListActivity.this,
@@ -357,6 +358,24 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 			break;
 		default:
 			break;
+		}
+	}
+	
+	class Tab1ListViewItemClick implements AdapterView.OnItemClickListener{
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+			List<SeekInfoEntity> seekInfoList = application.getSeekInfoList();
+			User u = new User();
+			SeekInfoEntity seekInfoEntity = seekInfoList.get(position);
+			String name = seekInfoEntity.getName();
+			int Id = seekInfoEntity.getId();
+			int img = seekInfoEntity.getImg();
+			u.setName(name);
+			u.setId(Id);
+			u.setImg(img);
+			Intent intent = new Intent(FriendListActivity.this, ChatActivity.class);
+			intent.putExtra("user", u);
+			startActivity(intent);
 		}
 	}
 
