@@ -10,6 +10,7 @@ public class SeekInfoEntity implements Serializable{
 	private String name;
 	private String address;
 	private String says;
+	private String imgName;
 	
 	public SeekInfoEntity(){
 	}
@@ -60,7 +61,14 @@ public class SeekInfoEntity implements Serializable{
 	public void setSays(String says){
 		this.says = says;
 	}
-
+	
+	public String getImagName(){
+		return imgName;
+	}
+	
+	public void setImgName(String imgName){
+		this.imgName = imgName;
+	}
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof SeekInfoEntity) {
