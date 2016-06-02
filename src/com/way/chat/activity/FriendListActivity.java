@@ -389,7 +389,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 				case R.id.publish_btn:
 					if(application.isClientStart()) {
 						ClientOutputThread out = application.getClient().getClientOutputThread();
-						TranObject o = new TranObject(TranObjectType.REFRESH);
+						TranObject o = new TranObject(TranObjectType.PUBLISHINFO);
 						SeekInfoEntity publishSeekInfo = new SeekInfoEntity();
 						//publishSeekInfo.setImg(img);
 						publishSeekInfo.setId(Integer.parseInt(util.getId()));
@@ -510,6 +510,12 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 				seekInfoList1.clear();	
 			}
 			seekInfoList1.addAll(list);
+			application.getSeekInfoAdapter().notifyDataSetChanged();
+			break;
+		case PUBLISHINFO:
+			Log.e("PushlishInfo", "ReceiveSeekInfo");
+			SeekInfoEntity seekinfo = (SeekInfoEntity)msg.getObject();
+			application.getSeekInfoList().add(seekinfo);
 			application.getSeekInfoAdapter().notifyDataSetChanged();
 			break;
 		case LOGIN:
