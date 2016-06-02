@@ -1,6 +1,7 @@
 package com.way.chat.activity;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -13,6 +14,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
@@ -92,7 +94,8 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 	private Button mSend; //发送
 	private Uri imageUri;
 	private String fileName;
-	
+	public static final int TAKE_PHOTO = 1;  
+	public static final int CROP_PHOTO = 2;  
 	
 	private MyListView myListView;// 好友列表自定义listView
 	private MyExAdapter myExAdapter;// 好
@@ -423,7 +426,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		            imageUri = Uri.fromFile(outputImage);
 		            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE"); //照相
 		            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri); //指定图片输出地址
-		            startActivityForResult(intent,0); //启动照相
+		            startActivityForResult(intent, TAKE_PHOTO); //启动照相
 		            
 					break;
 			}
@@ -635,4 +638,46 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 			}.execute();
 		}
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {  
+		super.onActivityResult(requestCode, resultCode, data);  
+		
+		if (resultCode == RESULT_OK) {  
+            switch (requestCode) {  
+            case TAKE_PHOTO:  
+            	Intent intent = new Intent("com.android.camera.action.CROP"); //剪裁  
+                intent.setDataAndType(imageUri, "image/*");  
+                intent.putExtra("scale", true);  
+                //设置宽高比例  
+                intent.putExtra("aspectX", 1);  
+                intent.putExtra("aspectY", 1);  
+                //设置裁剪图片宽高  
+                intent.putExtra("outputX", 340);  
+                intent.putExtra("outputY", 400);  
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);  
+                Toast.makeText(FriendListActivity.this, "剪裁图片", Toast.LENGTH_SHORT).show();  
+                //广播刷新相册   
+                Intent intentBc = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);  
+                intentBc.setData(imageUri);       
+                this.sendBroadcast(intentBc);      
+                startActivityForResult(intent, CROP_PHOTO); //设置裁剪参数显示图片至ImageView  
+                break;  
+            case CROP_PHOTO:  
+                try {      
+                    //图片解析成Bitmap对象  
+                    Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));  
+                    Toast.makeText(FriendListActivity.this, imageUri.toString(), Toast.LENGTH_SHORT).show(); 
+                    mImgSend.setBackgroundResource(0);
+                    mImgSend.setImageBitmap(bitmap); //将剪裁后照片显示出来  
+                } catch(FileNotFoundException e) {  
+                    e.printStackTrace();  
+                }  
+                break;  
+            default:  
+                break;  
+            }  
+        }  
+	}
+	
 }
