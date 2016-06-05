@@ -202,6 +202,9 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		out.setMsg(o);
 	}
 	private void Tab2_4SetPersonnalInfo(){
+		mImgSend.setTag("http://" + Constants.SERVER_IP + "/pic/" + (util.getImg() + ".png"));
+		new AsyncViewTask().execute(mImgSend);//异步加载图片
+		
 		mImgPersonal.setTag("http://" + Constants.SERVER_IP + "/pic/" + (util.getImg() + ".png"));
 		new AsyncViewTask().execute(mImgPersonal);//异步加载图片
 		
@@ -210,8 +213,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		mUserPwd2.setText(util.getPasswd());
 		mUserEmail.setText(util.getEmail());
 		
-		mImgSend.setTag("http://" + Constants.SERVER_IP + "/pic/" + (util.getImg() + ".png"));
-		new AsyncViewTask().execute(mImgSend);//异步加载图片
+		
 	}
 	/**
 	 * 处理服务器传递过来的用户数组数据，
@@ -321,7 +323,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		
 		// 下面是发布求伞信息处理
 		mImgSend = (ImageView) lay2.findViewById(R.id.img_send);
-		mAddressSend = (TextView) lay2.findViewById(R.id.address_send);
+		mAddressSend = (EditText) lay2.findViewById(R.id.address_send);
 		mSaysSend = (EditText) lay2.findViewById(R.id.says_send);
 		mClear = (Button) lay2.findViewById(R.id.clear_btn);
 		mSend = (Button) lay2.findViewById(R.id.publish_btn);
@@ -422,6 +424,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 						//publishSeekInfo.setImg(img);
 						publishSeekInfo.setId(Integer.parseInt(util.getId()));
 						publishSeekInfo.setName(util.getName());
+						publishSeekInfo.setAddress(mAddressSend.getText().toString());
 						String str = "";
 						str = mSaysSend.getText().toString();
 						if(str.length() >= 1){

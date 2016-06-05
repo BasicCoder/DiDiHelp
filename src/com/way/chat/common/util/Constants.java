@@ -1,7 +1,7 @@
 package com.way.chat.common.util;
 
 public class Constants {
-	public static final String SERVER_IP = "192.168.253.1";// 服务器ip
+	public static final String SERVER_IP = "192.168.23.1";// 服务器ip
 	public static final int SERVER_PORT = 8080;// 服务器端口
 
 	public static final int REGISTER_FAIL = 0;//注册失败
