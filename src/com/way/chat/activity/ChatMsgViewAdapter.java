@@ -2,6 +2,8 @@ package com.way.chat.activity;
 
 import java.util.List;
 
+import com.way.chat.common.util.Constants;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,7 +107,10 @@ public class ChatMsgViewAdapter extends BaseAdapter {
 		viewHolder.tvSendTime.setText(entity.getDate());
 		viewHolder.tvUserName.setText(entity.getName());
 		viewHolder.tvContent.setText(entity.getMessage());
-		viewHolder.icon.setImageResource(imgs[entity.getImg()]);
+		viewHolder.icon.setTag("http://" + Constants.SERVER_IP + "/pic/" + (entity.getImg() + ".png"));
+		new AsyncViewTask().execute(viewHolder.icon);//异步加载图片
+		
+		/// viewHolder.icon.setImageResource(imgs[entity.getImg()]);
 		return convertView;
 	}
 

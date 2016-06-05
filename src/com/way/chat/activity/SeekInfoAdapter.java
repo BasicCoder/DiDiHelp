@@ -3,6 +3,7 @@ package com.way.chat.activity;
 import java.util.LinkedList;
 
 import com.way.chat.common.bean.SeekInfoEntity;
+import com.way.chat.common.util.Constants;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.way.chat.activity.AsyncViewTask;
 
 public class SeekInfoAdapter extends BaseAdapter{
 	private Context context;
@@ -51,7 +53,11 @@ public class SeekInfoAdapter extends BaseAdapter{
 			holder = (ViewHolder) convertView.getTag();
 		}
 		
-		holder.img_icon.setBackgroundResource(mData.get(position).getImg());
+		//holder.img_icon.setBackgroundResource(mData.get(position).getImg());
+		
+		holder.img_icon.setTag("http://" + Constants.SERVER_IP + "/pic/" + (mData.get(position).getImg() + ".png"));
+		new AsyncViewTask().execute(holder.img_icon);//异步加载图片
+		
 		holder.name.setText(mData.get(position).getName());
 		holder.address.setText(mData.get(position).getAddress());
 		holder.says.setText(mData.get(position).getSays());
