@@ -328,7 +328,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 
 		// 下面是个人信息界面处理
 		mImgPersonal = (ImageView) lay4.findViewById(R.id.img_personal);
-		mSaysPersonal = (EditText) lay4.findViewById(R.id.says_personal);
+		//mSaysPersonal = (EditText) lay4.findViewById(R.id.says_personal);
 		
 		// 下面是群组界面处理
 		/*
