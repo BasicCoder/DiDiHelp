@@ -7,8 +7,8 @@
 	<!-- 定义一个用于显示头像的ImageView -->
     <ImageView
         android:id="@+id/imgicon"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="64dip"
+        android:layout_height="64dip"
         android:baselineAlignBottom="true"
         android:paddingLeft="8dp" />
 

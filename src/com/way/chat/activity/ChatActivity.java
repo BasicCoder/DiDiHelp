@@ -67,7 +67,7 @@ public class ChatActivity extends MyActivity implements OnClickListener {
 		mBtnBack = (Button) findViewById(R.id.chat_back);
 		mBtnBack.setOnClickListener(this);
 		mFriendName = (TextView) findViewById(R.id.chat_name);
-		mFriendName.setText(util.getName());
+		mFriendName.setText(user.getName());
 		mEditTextContent = (EditText) findViewById(R.id.chat_editmessage);
 	}
 
