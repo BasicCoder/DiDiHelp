@@ -357,6 +357,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		mUserEmail = (EditText) lay4.findViewById(R.id.email);
 		mModifyPerInfoButton = (Button) lay4.findViewById(R.id.update_btn);
 		mImgPersonal.setOnClickListener(new Tab4ClickEvent());
+		mModifyPerInfoButton.setOnClickListener(new Tab4ClickEvent());
 		// 下面是群组界面处理
 		/*
 		mGroupListView = (ListView) lay3.findViewById(R.id.tab3_listView);
@@ -495,6 +496,9 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri); //指定图片输出地址
 		            startActivityForResult(intent, TAKE_PHOTO); //启动照相
 		            
+					break;
+				case R.id.update_btn:
+					Toast.makeText(getApplicationContext(), "修改成功！",  Toast.LENGTH_SHORT).show();
 					break;
 			}
 		}
