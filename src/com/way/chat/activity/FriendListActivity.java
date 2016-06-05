@@ -191,7 +191,6 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		initListViewData(list);
 		
 		SendGetSeekInfoList();
-		Tab4SetPersonnalInfo();
 	}
 	
 	private void SendGetSeekInfoList(){
@@ -203,8 +202,8 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 	private void Tab4SetPersonnalInfo(){
 		mImgPersonal.setTag("http://" + Constants.SERVER_IP + "/pic/" + (util.getImg() + ".png"));
 		new AsyncViewTask().execute(mImgPersonal);//异步加载图片
-		mUserName.setText(util.getName());
 		
+		mUserName.setText(util.getName());		
 		mUserPwd.setText(util.getPasswd());
 		mUserPwd2.setText(util.getPasswd());
 		mUserEmail.setText(util.getEmail());
@@ -348,6 +347,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		mUserPwd = (EditText) lay4.findViewById(R.id.pass2);
 		mUserEmail = (EditText) lay4.findViewById(R.id.email);
 		mModifyPerInfoButton = (Button) lay4.findViewById(R.id.update_btn);
+		Tab4SetPersonnalInfo();
 		// 下面是群组界面处理
 		/*
 		mGroupListView = (ListView) lay3.findViewById(R.id.tab3_listView);
