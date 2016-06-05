@@ -150,6 +150,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		initData();// 初始化数据
 		initImageView();// 初始化动画
 		initUI();// 初始化界面
+		Tab4SetPersonnalInfo();
 	}
 
 	@Override
@@ -347,7 +348,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		mUserPwd = (EditText) lay4.findViewById(R.id.pass2);
 		mUserEmail = (EditText) lay4.findViewById(R.id.email);
 		mModifyPerInfoButton = (Button) lay4.findViewById(R.id.update_btn);
-		Tab4SetPersonnalInfo();
+		
 		// 下面是群组界面处理
 		/*
 		mGroupListView = (ListView) lay3.findViewById(R.id.tab3_listView);
