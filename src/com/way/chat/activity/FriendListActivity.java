@@ -345,7 +345,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		//mSaysPersonal = (EditText) lay4.findViewById(R.id.says_personal);
 		mUserName = (EditText) lay4.findViewById(R.id.username);
 		mUserPwd = (EditText) lay4.findViewById(R.id.pass);
-		mUserPwd = (EditText) lay4.findViewById(R.id.pass2);
+		mUserPwd2 = (EditText) lay4.findViewById(R.id.pass2);
 		mUserEmail = (EditText) lay4.findViewById(R.id.email);
 		mModifyPerInfoButton = (Button) lay4.findViewById(R.id.update_btn);
 		
