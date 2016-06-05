@@ -64,6 +64,7 @@ public class AsyncViewTask extends AsyncTask<View, Void, Drawable> {
     protected void onPostExecute(Drawable drawable) {
         if (drawable != null) {
             this.mView.setBackgroundDrawable(drawable);
+
             this.mView = null;
         }
     }

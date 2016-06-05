@@ -87,6 +87,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 
 	private ListView mSeekInfoListView; //求伞listView
 	
+	private boolean temp = false;
 	private ImageView mImgSend; //发布信息配图
 	private TextView mAddressSend; //发布地址
 	private EditText mSaysSend; //发布需求
@@ -97,7 +98,8 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 	public static final int TAKE_PHOTO = 1;  
 	public static final int CROP_PHOTO = 2;  
 	public boolean isTakePhoto = false;
-	
+	private int choose = 1;
+
 	private MyListView myListView;// 好友列表自定义listView
 	private MyExAdapter myExAdapter;// 好
 
@@ -314,8 +316,8 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		// 求伞信息列表
 		mSeekInfoListView =(ListView) lay1.findViewById(R.id.tab1_listView);
 		List<SeekInfoEntity> seekInfoList = application.getSeekInfoList();
-		seekInfoList.add(new SeekInfoEntity(R.drawable.umbrella1, "test1", "test1", "This is a test."));
-		seekInfoList.add(new SeekInfoEntity(R.drawable.umbrella1, "test2", "test2", "This is a test."));
+		// seekInfoList.add(new SeekInfoEntity(R.drawable.umbrella1, "test1", "test1", "This is a test."));
+		// seekInfoList.add(new SeekInfoEntity(R.drawable.umbrella1, "test2", "test2", "This is a test."));
 		//SeekInfoAdapter seekInfoAdapter = new SeekInfoAdapter(this, (LinkedList<SeekInfoEntity>)seekInfoList);
 		mSeekInfoListView.setAdapter(application.getSeekInfoAdapter());
 		mSeekInfoListView.setOnItemClickListener(new Tab1ListViewItemClick());
@@ -367,7 +369,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		GroupAdapter adapter = new GroupAdapter(this, groupList);
 		mGroupListView.setAdapter(adapter);
 		*/
-		
+		temp = true;
 	}
 
 	@Override
@@ -425,6 +427,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 						publishSeekInfo.setId(Integer.parseInt(util.getId()));
 						publishSeekInfo.setName(util.getName());
 						publishSeekInfo.setAddress(mAddressSend.getText().toString());
+						
 						String str = "";
 						str = mSaysSend.getText().toString();
 						if(str.length() >= 1){
@@ -432,6 +435,9 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 						}
 						if(isTakePhoto){
 							publishSeekInfo.setImg(10);
+						}
+						else{
+							publishSeekInfo.setImg(util.getImg());
 						}
 						
 						o.setObject(publishSeekInfo);
@@ -441,10 +447,11 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 					}
 					break;
 				case R.id.img_send:
+					choose = 1;
 					SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
 		            Date date = new Date(System.currentTimeMillis());
 		            fileName = format.format(date);
-		            File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+		            File path = Environment.getExternalStorageDirectory();
 		            File outputImage = new File(path, fileName+".jpg");
 		            try {
 		                if(outputImage.exists()) {
@@ -469,10 +476,11 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		public void onClick(View v){
 			switch(v.getId()){
 				case R.id.img_personal:
+					choose = 2;
 					SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
 		            Date date = new Date(System.currentTimeMillis());
 		            fileName = format.format(date);
-		            File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+		            File path = Environment.getExternalStorageDirectory();
 		            File outputImage = new File(path, fileName+".jpg");
 		            try {
 		                if(outputImage.exists()) {
@@ -566,12 +574,9 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 			break;
 		case SEEKINFO:
 			Log.e("SeekInfo", "ReceiveSeekList");
-			List<SeekInfoEntity> seekInfoList1 = application.getSeekInfoList();
-			List<SeekInfoEntity> list = (List<SeekInfoEntity>) msg.getObject();
-			if(!seekInfoList1.isEmpty()){
-				seekInfoList1.clear();	
-			}
-			seekInfoList1.addAll(list);
+			List<SeekInfoEntity> list = (List<SeekInfoEntity>) msg.getObject();			
+			application.getSeekInfoList().clear();	
+			application.getSeekInfoList().addAll(list);
 			application.getSeekInfoAdapter().notifyDataSetChanged();
 			break;
 		case PUBLISHINFO:
@@ -728,8 +733,14 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
                     //图片解析成Bitmap对象  
                     Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));  
                     Toast.makeText(FriendListActivity.this, imageUri.toString(), Toast.LENGTH_SHORT).show(); 
-                    mImgSend.setBackgroundResource(0);
-                    mImgSend.setImageBitmap(bitmap); //将剪裁后照片显示出来  
+                    if(choose == 1){
+                    	mImgSend.setBackgroundResource(0);
+                    	mImgSend.setImageBitmap(bitmap); //将剪裁后照片显示出来  
+                    }else if(choose == 2){
+                    	mImgPersonal.setBackgroundResource(0);
+                    	mImgPersonal.setImageBitmap(bitmap);
+                    }
+                    
                 } catch(FileNotFoundException e) {  
                     e.printStackTrace();  
                 }  
