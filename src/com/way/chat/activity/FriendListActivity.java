@@ -150,7 +150,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		initData();// 初始化数据
 		initImageView();// 初始化动画
 		initUI();// 初始化界面
-		Tab4SetPersonnalInfo();
+		Tab2_4SetPersonnalInfo();
 	}
 
 	@Override
@@ -200,7 +200,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		o.setFromUser(Integer.parseInt(util.getId()));
 		out.setMsg(o);
 	}
-	private void Tab4SetPersonnalInfo(){
+	private void Tab2_4SetPersonnalInfo(){
 		mImgPersonal.setTag("http://" + Constants.SERVER_IP + "/pic/" + (util.getImg() + ".png"));
 		new AsyncViewTask().execute(mImgPersonal);//异步加载图片
 		
@@ -208,6 +208,9 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		mUserPwd.setText(util.getPasswd());
 		mUserPwd2.setText(util.getPasswd());
 		mUserEmail.setText(util.getEmail());
+		
+		mImgSend.setTag("http://" + Constants.SERVER_IP + "/pic/" + (util.getImg() + ".png"));
+		new AsyncViewTask().execute(mImgSend);//异步加载图片
 	}
 	/**
 	 * 处理服务器传递过来的用户数组数据，

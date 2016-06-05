@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.way.chat.common.bean.User;
+import com.way.chat.common.util.Constants;
 
 public class RecentChatAdapter extends BaseAdapter {
 	private Context context;
@@ -74,7 +75,9 @@ public class RecentChatAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		final RecentChatEntity entity = list.get(position);
-		holder.icon.setImageResource(imgs[entity.getImg()]);
+		holder.icon.setTag("http://" + Constants.SERVER_IP + "/pic/" + (entity.getImg() + ".png"));
+		new AsyncViewTask().execute(holder.icon);//异步加载图片
+		// holder.icon.setImageResource(imgs[entity.getImg()]);
 		holder.name.setText(entity.getName());
 		holder.name.setTextColor(Color.BLACK);
 		holder.date.setText(entity.getTime());
