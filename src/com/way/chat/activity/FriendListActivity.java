@@ -96,6 +96,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 	private String fileName;
 	public static final int TAKE_PHOTO = 1;  
 	public static final int CROP_PHOTO = 2;  
+	public boolean isTakePhoto = false;
 	
 	private MyListView myListView;// 好友列表自定义listView
 	private MyExAdapter myExAdapter;// 好
@@ -351,7 +352,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		mUserPwd2 = (EditText) lay4.findViewById(R.id.pass2);
 		mUserEmail = (EditText) lay4.findViewById(R.id.email);
 		mModifyPerInfoButton = (Button) lay4.findViewById(R.id.update_btn);
-		
+		mImgPersonal.setOnClickListener(new Tab4ClickEvent());
 		// 下面是群组界面处理
 		/*
 		mGroupListView = (ListView) lay3.findViewById(R.id.tab3_listView);
@@ -426,7 +427,10 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 						if(str.length() >= 1){
 							publishSeekInfo.setSays(str);
 						}
-						publishSeekInfo.setImg(10);
+						if(isTakePhoto){
+							publishSeekInfo.setImg(10);
+						}
+						
 						o.setObject(publishSeekInfo);
 						o.setFromUser(Integer.parseInt(util.getId()));
 						out.setMsg(o);
@@ -434,6 +438,34 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 					}
 					break;
 				case R.id.img_send:
+					SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+		            Date date = new Date(System.currentTimeMillis());
+		            fileName = format.format(date);
+		            File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+		            File outputImage = new File(path, fileName+".jpg");
+		            try {
+		                if(outputImage.exists()) {
+		                    outputImage.delete();
+		                }
+		                outputImage.createNewFile();
+		            } catch(IOException e) {
+		                e.printStackTrace();
+		            }
+		            imageUri = Uri.fromFile(outputImage);
+		            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE"); //照相
+		            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri); //指定图片输出地址
+		            startActivityForResult(intent, TAKE_PHOTO); //启动照相
+		            
+					break;
+			}
+		}
+	}
+
+	class Tab4ClickEvent implements View.OnClickListener{
+		@Override
+		public void onClick(View v){
+			switch(v.getId()){
+				case R.id.img_personal:
 					SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
 		            Date date = new Date(System.currentTimeMillis());
 		            fileName = format.format(date);
@@ -688,6 +720,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
                 startActivityForResult(intent, CROP_PHOTO); //设置裁剪参数显示图片至ImageView  
                 break;  
             case CROP_PHOTO:  
+            	isTakePhoto = true;
                 try {      
                     //图片解析成Bitmap对象  
                     Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));  
