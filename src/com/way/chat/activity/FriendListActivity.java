@@ -423,7 +423,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 						if(str.length() >= 1){
 							publishSeekInfo.setSays(str);
 						}
-						
+						publishSeekInfo.setImg(10);
 						o.setObject(publishSeekInfo);
 						o.setFromUser(Integer.parseInt(util.getId()));
 						out.setMsg(o);
