@@ -299,11 +299,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		//SeekInfoAdapter seekInfoAdapter = new SeekInfoAdapter(this, (LinkedList<SeekInfoEntity>)seekInfoList);
 		mSeekInfoListView.setAdapter(application.getSeekInfoAdapter());
 		mSeekInfoListView.setOnItemClickListener(new Tab1ListViewItemClick());
-		// 下面是最近会话界面处理
-		mRecentListView = (ListView) lay1.findViewById(R.id.tab1_listView);
-		// mRecentAdapter = new RecentChatAdapter(FriendListActivity.this,
-		// application.getmRecentList());// 从全局变量中获取最近聊天对象数组
-		// mRecentListView.setAdapter(application.getmRecentAdapter());// 先设置空对象，要么从数据库中读出
+		
 		
 		// 下面是发布求伞信息处理
 		mImgSend = (ImageView) lay2.findViewById(R.id.img_send);
@@ -316,14 +312,20 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		mImgSend.setOnClickListener(new Tab2ClickEvent());
 		
 		// 下面是处理好友列表界面处理
-		myListView = (MyListView) lay3.findViewById(R.id.tab3_listView);
-		myExAdapter = new MyExAdapter(this, group);
-		myListView.setAdapter(myExAdapter);
-		myListView.setGroupIndicator(null);// 不设置大组指示器图标，因为我们自定义设置了
-		myListView.setDivider(null);// 设置图片可拉伸的
-		myListView.setFocusable(true);// 聚焦才可以下拉刷新
-		myListView.setonRefreshListener(new MyRefreshListener());
+		// myListView = (MyListView) lay3.findViewById(R.id.tab3_listView);
+		// myExAdapter = new MyExAdapter(this, group);
+		// myListView.setAdapter(myExAdapter);
+		// myListView.setGroupIndicator(null);// 不设置大组指示器图标，因为我们自定义设置了
+		// myListView.setDivider(null);// 设置图片可拉伸的
+		// myListView.setFocusable(true);// 聚焦才可以下拉刷新
+		// myListView.setonRefreshListener(new MyRefreshListener());
 		
+		// 下面是最近会话界面处理
+		mRecentListView = (ListView) lay3.findViewById(R.id.tab3_listView);
+		// mRecentAdapter = new RecentChatAdapter(FriendListActivity.this,
+		// application.getmRecentList());// 从全局变量中获取最近聊天对象数组
+		mRecentListView.setAdapter(application.getmRecentAdapter());// 先设置空对象，要么从数据库中读出
+
 		// 下面是个人信息界面处理
 		mImgPersonal = (ImageView) lay4.findViewById(R.id.img_personal);
 		mSaysPersonal = (EditText) lay4.findViewById(R.id.says_personal);
