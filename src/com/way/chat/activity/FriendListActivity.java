@@ -102,7 +102,12 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 
 	private ImageView mImgPersonal; //个人头像
 	private EditText mSaysPersonal; //个人留言
-	
+	private EditText mUserName; 
+	private EditText mUserPwd;
+	private EditText mUserPwd2;
+	private EditText mUserEmail;
+	private Button mModifyPerInfoButton;
+
 	private ListView mRecentListView;// 最近会话的listView
 	private int newNum = 0;
 
@@ -186,6 +191,7 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		initListViewData(list);
 		
 		SendGetSeekInfoList();
+		Tab4SetPersonnalInfo();
 	}
 	
 	private void SendGetSeekInfoList(){
@@ -194,7 +200,15 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		o.setFromUser(Integer.parseInt(util.getId()));
 		out.setMsg(o);
 	}
-	
+	private void Tab4SetPersonnalInfo(){
+		mImgPersonal.setTag("http://" + Constants.SERVER_IP + "/pic/" + (util.getImg() + ".png"));
+		new AsyncViewTask().execute(mImgPersonal);//异步加载图片
+		mUserName.setText(util.getName());
+		
+		mUserPwd.setText(util.getPasswd());
+		mUserPwd2.setText(util.getPasswd());
+		mUserEmail.setText(util.getEmail());
+	}
 	/**
 	 * 处理服务器传递过来的用户数组数据，
 	 * 
@@ -329,7 +343,11 @@ public class FriendListActivity extends MyActivity implements OnClickListener {
 		// 下面是个人信息界面处理
 		mImgPersonal = (ImageView) lay4.findViewById(R.id.img_personal);
 		//mSaysPersonal = (EditText) lay4.findViewById(R.id.says_personal);
-		
+		mUserName = (EditText) lay4.findViewById(R.id.username);
+		mUserPwd = (EditText) lay4.findViewById(R.id.pass);
+		mUserPwd = (EditText) lay4.findViewById(R.id.pass2);
+		mUserEmail = (EditText) lay4.findViewById(R.id.email);
+		mModifyPerInfoButton = (Button) lay4.findViewById(R.id.update_btn);
 		// 下面是群组界面处理
 		/*
 		mGroupListView = (ListView) lay3.findViewById(R.id.tab3_listView);
